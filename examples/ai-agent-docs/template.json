@@ -1,0 +1,14 @@
+{
+  "name": "ai-agent-docs",
+  "displayName": "AI Agent Docs",
+  "description": "AGENT.md and Codex configuration starter files.",
+  "variables": [
+    {
+      "name": "projectName",
+      "label": "Project name",
+      "default": "{{workspaceName}}",
+      "required": true
+    }
+  ],
+  "ignore": [".DS_Store"]
+}

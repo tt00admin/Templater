@@ -1,0 +1,215 @@
+{
+  "name": "templater",
+  "displayName": "Templater",
+  "description": "Manage reusable project templates and apply them safely to VS Code workspaces.",
+  "version": "0.0.1",
+  "publisher": "local",
+  "license": "MIT",
+  "icon": "media/marketplace-icon.png",
+  "engines": {
+    "vscode": "^1.92.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "template",
+    "templates",
+    "scaffold",
+    "workspace",
+    "boilerplate"
+  ],
+  "galleryBanner": {
+    "color": "#2f6f73",
+    "theme": "dark"
+  },
+  "activationEvents": [
+    "onView:templater.templates",
+    "onCommand:templater.addSource",
+    "onCommand:templater.removeSource",
+    "onCommand:templater.refresh",
+    "onCommand:templater.applyTemplate",
+    "onCommand:templater.previewTemplate",
+    "onCommand:templater.diffTemplateFile",
+    "onCommand:templater.openTemplateSource"
+  ],
+  "main": "./dist/src/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "templater",
+      "properties": {
+        "templater.sources": {
+          "type": "array",
+          "default": [],
+          "description": "Template source directories.",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "path"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "templater.defaultConflictAction": {
+          "type": "string",
+          "enum": [
+            "ask",
+            "skip",
+            "overwrite",
+            "rename"
+          ],
+          "default": "ask",
+          "description": "Default action when applying a template would touch an existing file."
+        },
+        "templater.enableVariableReplacement": {
+          "type": "boolean",
+          "default": true,
+          "description": "Replace {{variable}} placeholders in text template files."
+        },
+        "templater.renameSuffix": {
+          "type": "string",
+          "default": ".template",
+          "description": "Suffix used when conflict action is rename."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "templater.addSource",
+        "title": "templater: Add Template Source",
+        "icon": "$(add)"
+      },
+      {
+        "command": "templater.removeSource",
+        "title": "templater: Remove Template Source",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "templater.refresh",
+        "title": "templater: Refresh Templates",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "templater.applyTemplate",
+        "title": "templater: Apply Template",
+        "icon": "$(run)"
+      },
+      {
+        "command": "templater.previewTemplate",
+        "title": "templater: Preview Template",
+        "icon": "$(preview)"
+      },
+      {
+        "command": "templater.diffTemplateFile",
+        "title": "templater: Diff Template File",
+        "icon": "$(diff)"
+      },
+      {
+        "command": "templater.openTemplateSource",
+        "title": "templater: Open Template Source",
+        "icon": "$(go-to-file)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "templater",
+          "title": "templater",
+          "icon": "media/activity-bar-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "templater": [
+        {
+          "id": "templater.templates",
+          "name": "Templates"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "templater.refresh",
+          "when": "view == templater.templates",
+          "group": "navigation"
+        },
+        {
+          "command": "templater.addSource",
+          "when": "view == templater.templates",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "templater.applyTemplate",
+          "when": "view == templater.templates && viewItem == templateSet",
+          "group": "inline"
+        },
+        {
+          "command": "templater.applyTemplate",
+          "when": "view == templater.templates && viewItem == templateSource",
+          "group": "inline"
+        },
+        {
+          "command": "templater.applyTemplate",
+          "when": "view == templater.templates && viewItem == templateFile",
+          "group": "inline"
+        },
+        {
+          "command": "templater.previewTemplate",
+          "when": "view == templater.templates && viewItem == templateSet",
+          "group": "navigation"
+        },
+        {
+          "command": "templater.previewTemplate",
+          "when": "view == templater.templates && viewItem == templateFile",
+          "group": "navigation"
+        },
+        {
+          "command": "templater.diffTemplateFile",
+          "when": "view == templater.templates && viewItem == templateFile",
+          "group": "navigation"
+        },
+        {
+          "command": "templater.openTemplateSource",
+          "when": "view == templater.templates && viewItem == templateSource",
+          "group": "navigation"
+        },
+        {
+          "command": "templater.removeSource",
+          "when": "view == templater.templates && viewItem == templateSource",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint .",
+    "format": "prettier --check .",
+    "test": "vitest run",
+    "package": "vsce package",
+    "vscode:prepublish": "npm run compile"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.27.0",
+    "@types/node": "^22.15.19",
+    "@types/vscode": "^1.92.0",
+    "@vscode/vsce": "^3.9.1",
+    "eslint": "^9.27.0",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.32.1",
+    "vitest": "^3.1.4"
+  }
+}

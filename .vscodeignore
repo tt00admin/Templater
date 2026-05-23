@@ -1,0 +1,16 @@
+.vscode/**
+.vscode-test/**
+.gitignore
+.prettierignore
+src/**
+test/**
+dist/test/**
+docs/**
+examples/**
+node_modules/**
+*.vsix
+*.log
+tsconfig.json
+vitest.config.ts
+eslint.config.mjs
+package-lock.json
