@@ -3,8 +3,16 @@
   "displayName": "Templater",
   "description": "Manage reusable project templates and apply them safely to VS Code workspaces.",
   "version": "0.0.1",
-  "publisher": "local",
+  "publisher": "tt00",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tt00admin/Templater.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tt00admin/Templater/issues"
+  },
+  "homepage": "https://github.com/tt00admin/Templater#readme",
   "icon": "media/marketplace-icon.png",
   "engines": {
     "vscode": "^1.92.0"
