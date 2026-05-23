@@ -4,7 +4,7 @@ import { registerTemplateCommands } from "./commands/templateCommands";
 import { TemplateTreeProvider } from "./views/templateTreeProvider";
 
 export function activate(context: vscode.ExtensionContext): void {
-  const output = vscode.window.createOutputChannel("templater");
+  const output = vscode.window.createOutputChannel("Workspace Templater");
   const treeProvider = new TemplateTreeProvider(getTemplateSources);
 
   context.subscriptions.push(output);

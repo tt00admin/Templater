@@ -89,7 +89,7 @@ export class TemplateTreeProvider implements vscode.TreeDataProvider<TemplateTre
       }
       return this.results.length > 0
         ? this.results.map((result) => new SourceItem(result))
-        : [new MessageItem("No template sources", "Run templater: Add Template Source")];
+        : [new MessageItem("No template sources", "Run Workspace Templater: Add Template Source")];
     }
 
     if (element instanceof SourceItem) {

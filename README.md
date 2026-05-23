@@ -1,11 +1,11 @@
-# Templater
+# Workspace Templater
 
-`templater` is a VS Code extension for managing reusable project templates from one place and applying them safely to a workspace.
+`workspace-templater` is a VS Code extension for managing reusable project templates from one place and applying them safely to a workspace.
 
 ## Features
 
 - Register local template source directories.
-- Browse template sets in the `templater` Activity Bar view.
+- Browse template sets in the `Workspace Templater` Activity Bar view.
 - Apply a template set to the current workspace.
 - Detect existing-file conflicts before writing.
 - Choose skip, overwrite, rename, or cancel for conflicts.
@@ -13,9 +13,9 @@
 
 ## Quick Start
 
-1. Run `templater: Add Template Source`.
+1. Run `Workspace Templater: Add Template Source`.
 2. Select a directory that contains reusable template files or folders.
-3. Open the `Templater` Activity Bar view.
+3. Open the `Workspace Templater` Activity Bar view.
 4. Pick a template set and run `Apply Template`.
 5. Review any conflicts before files are written.
 
@@ -56,13 +56,13 @@ Optional `template.json`:
 
 ## Commands
 
-- `templater: Add Template Source`
-- `templater: Remove Template Source`
-- `templater: Refresh Templates`
-- `templater: Apply Template`
-- `templater: Preview Template`
-- `templater: Diff Template File`
-- `templater: Open Template Source`
+- `Workspace Templater: Add Template Source`
+- `Workspace Templater: Remove Template Source`
+- `Workspace Templater: Refresh Templates`
+- `Workspace Templater: Apply Template`
+- `Workspace Templater: Preview Template`
+- `Workspace Templater: Diff Template File`
+- `Workspace Templater: Open Template Source`
 
 ## Extension Settings
 
@@ -75,8 +75,8 @@ Optional `template.json`:
 
 1. Run `npm install` and `npm run compile`.
 2. Press F5 in VS Code to launch an Extension Development Host.
-3. Run `templater: Add Template Source` and select the repository `examples` directory.
-4. Open another workspace, choose `AI Agent Docs` in the `templater` view, and run `Apply Template`.
+3. Run `Workspace Templater: Add Template Source` and select the repository `examples` directory.
+4. Open another workspace, choose `AI Agent Docs` in the `Workspace Templater` view, and run `Apply Template`.
 5. Re-run apply against the same workspace to verify conflict handling and `Diff Template File`.
 
 ## Development

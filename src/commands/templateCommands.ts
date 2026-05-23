@@ -100,7 +100,9 @@ export function registerTemplateCommands(
       "templater.diffTemplateFile",
       async (item?: TemplateFileItem) => {
         if (!item) {
-          vscode.window.showErrorMessage("Select a template file from the templater view first.");
+          vscode.window.showErrorMessage(
+            "Select a template file from the Workspace Templater view first."
+          );
           return;
         }
         await diffTemplateFile(item);
@@ -216,7 +218,7 @@ async function applyTemplate(template: TemplateSet, output: vscode.OutputChannel
   const message = `Template applied: ${summary.created} created, ${summary.overwritten} overwritten, ${summary.renamed} renamed, ${summary.skipped} skipped.`;
   if (summary.failed.length > 0) {
     vscode.window.showWarningMessage(
-      `${message} ${summary.failed.length} failed. See templater output.`
+      `${message} ${summary.failed.length} failed. See Workspace Templater output.`
     );
   } else {
     vscode.window.showInformationMessage(message);
