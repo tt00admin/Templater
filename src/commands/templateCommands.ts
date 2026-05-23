@@ -23,6 +23,7 @@ import {
   TemplateSetItem,
   TemplateTreeProvider
 } from "../views/templateTreeProvider";
+import { createTemplateForSelectedFile } from "./templateSelection";
 
 export function registerTemplateCommands(
   context: vscode.ExtensionContext,
@@ -76,7 +77,7 @@ export function registerTemplateCommands(
     }),
     vscode.commands.registerCommand("templater.applyTemplate", async (item?: unknown) => {
       const template =
-        (await resolveTemplateFromItem(item, treeProvider)) ?? (await pickTemplate(treeProvider));
+        resolveTemplateFromItem(item) ?? (await pickTemplate(treeProvider));
       if (!template) {
         return;
       }
@@ -90,7 +91,7 @@ export function registerTemplateCommands(
       }
 
       const template =
-        (await resolveTemplateFromItem(item, treeProvider)) ?? (await pickTemplate(treeProvider));
+        resolveTemplateFromItem(item) ?? (await pickTemplate(treeProvider));
       if (!template) {
         return;
       }
@@ -120,10 +121,7 @@ export function registerTemplateCommands(
   );
 }
 
-async function resolveTemplateFromItem(
-  item: unknown,
-  treeProvider: TemplateTreeProvider
-): Promise<TemplateSet | undefined> {
+function resolveTemplateFromItem(item: unknown): TemplateSet | undefined {
   if (item instanceof TemplateSetItem) {
     return item.template;
   }
@@ -133,7 +131,7 @@ async function resolveTemplateFromItem(
   }
 
   if (item instanceof TemplateFileItem) {
-    return treeProvider.getTemplateByPath(item.file.absolutePath);
+    return createTemplateForSelectedFile(item.ownerTemplate, item.file);
   }
 
   return undefined;
