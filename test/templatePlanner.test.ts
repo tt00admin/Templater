@@ -60,6 +60,26 @@ describe("createApplyPlan", () => {
     expect(plan.conflicts).toHaveLength(1);
   });
 
+  it("chooses an unused target for configured rename conflicts", async () => {
+    const sourcePath = path.join(sourceRoot, "README.md");
+    await fs.writeFile(sourcePath, "# Template");
+    await fs.writeFile(path.join(workspaceRoot, "README.md"), "# Existing");
+    await fs.writeFile(path.join(workspaceRoot, "README.template.md"), "# Existing renamed");
+
+    const plan = await createApplyPlan(
+      templateSet([{ relativePath: "README.md", absolutePath: sourcePath }]),
+      {
+        workspaceRoot,
+        conflictAction: "rename",
+        renameSuffix: ".template",
+        enableVariableReplacement: true
+      }
+    );
+
+    expect(plan.files[0].action).toBe("rename");
+    expect(plan.files[0].finalTargetPath.endsWith("README.template-2.md")).toBe(true);
+  });
+
   it("uses interactive conflict resolver for ask", async () => {
     const sourcePath = path.join(sourceRoot, "README.md");
     await fs.writeFile(sourcePath, "# Template");

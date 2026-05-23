@@ -39,7 +39,10 @@ export async function createApplyPlan(
     const baseAction = resolution.action;
     const finalTargetPath =
       baseAction === "rename"
-        ? (resolution.finalTargetPath ?? appendSuffix(targetPath, options.renameSuffix))
+        ? await resolveRenameTarget(
+            options.workspaceRoot,
+            resolution.finalTargetPath ?? appendSuffix(targetPath, options.renameSuffix)
+          )
         : targetPath;
 
     files.push({
@@ -82,5 +85,31 @@ async function pathExists(filePath: string): Promise<boolean> {
     return true;
   } catch {
     return false;
+  }
+}
+
+async function resolveRenameTarget(
+  workspaceRoot: string,
+  preferredPath: string
+): Promise<string> {
+  if (!isInside(workspaceRoot, preferredPath)) {
+    throw new Error(`Rename target escapes workspace root: ${preferredPath}`);
+  }
+
+  if (!(await pathExists(preferredPath))) {
+    return preferredPath;
+  }
+
+  const directory = path.dirname(preferredPath);
+  const extension = path.extname(preferredPath);
+  const base = path.basename(preferredPath, extension);
+  let index = 2;
+
+  while (true) {
+    const candidate = path.join(directory, `${base}-${index}${extension}`);
+    if (!(await pathExists(candidate))) {
+      return candidate;
+    }
+    index += 1;
   }
 }
